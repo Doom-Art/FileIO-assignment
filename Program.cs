@@ -6,9 +6,14 @@ namespace FileIO_assignment
     {
         static void Main(string[] args)
         {
-            foreach (string line in File.ReadLines(@"results.txt", Encoding.UTF8))
+            List<string> words = new List<string>();
+            foreach (string line in File.ReadLines(@"test.txt", Encoding.UTF8))
             {
-                Console.WriteLine(line);
+                words.Add(line.ToUpper());
+            }
+            foreach (string word in words)
+            {
+                Console.WriteLine(word);
             }
         }
     }
