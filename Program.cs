@@ -7,14 +7,32 @@ namespace FileIO_assignment
         static void Main(string[] args)
         {
             List<string> words = new List<string>();
-            foreach (string line in File.ReadLines(@"test.txt", Encoding.UTF8))
+            int count = 0;
+            if (File.Exists(@"test.txt"))
             {
-                words.Add(line.ToUpper());
+                foreach (string line in File.ReadLines(@"test.txt", Encoding.UTF8))
+                {
+                    words.Add(line.ToUpper());
+                }
+                words.Add("HELLO HUMAN    ");
+                foreach (string i in words)
+                {
+                    count ++;
+                    Console.WriteLine(i);
+                    foreach (char c in i.Trim())
+                    {
+                        if (c == ' ')
+                            count++;
+                    }
+                }
+                Console.WriteLine($"The list has {count} words");
             }
-            foreach (string word in words)
-            {
-                Console.WriteLine(word);
-            }
+            else
+                Console.WriteLine("error");
+            StreamWriter writer = new StreamWriter("capitals.txt");
+            foreach (string i in words)
+                writer.WriteLine(i);
+            writer.Close();
         }
     }
 }
