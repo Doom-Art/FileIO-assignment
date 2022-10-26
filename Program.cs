@@ -15,19 +15,23 @@ namespace FileIO_assignment
                 foreach (string i in File.ReadLines(@"results.txt", Encoding.UTF8))
                 {
                     if (count == 0){
-                        name = i;
+                        name = i.Trim();
                         count++;
                     }
                     else if (count == 1){
-                        eventName = i;
+                        eventName = i.Trim();
                         count++;
                     }
-                    else{
-                        while (double.TryParse(i, out double tempScore))
-                        {
-                            score += tempScore;
-                        }
-                        listEvent.Add(new EventScore(name, eventName, score));
+                    else if(count < 6){
+                        double.TryParse(i.Trim(), out double tempScore);
+                        score += tempScore;
+                        count++;
+                    }
+                    else
+                    {
+                        double.TryParse(i.Trim(), out double tempScore);
+                        score += tempScore;
+                        listEvent.Add(new EventScore(name, eventName, Math.Round(score,2)));
                         name = "";
                         eventName = "";
                         score = 0;
