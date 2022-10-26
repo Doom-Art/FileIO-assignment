@@ -6,33 +6,41 @@ namespace FileIO_assignment
     {
         static void Main(string[] args)
         {
-            List<string> words = new List<string>();
+            List<EventScore> listEvent= new List<EventScore>();
             int count = 0;
-            if (File.Exists(@"test.txt"))
-            {
-                foreach (string line in File.ReadLines(@"test.txt", Encoding.UTF8))
+            if (File.Exists(@"results.txt")){
+                string name = "";
+                string eventName = "";
+                double score = 0;
+                foreach (string i in File.ReadLines(@"results.txt", Encoding.UTF8))
                 {
-                    words.Add(line.ToUpper());
-                }
-                words.Add("HELLO HUMAN    ");
-                foreach (string i in words)
-                {
-                    count ++;
-                    Console.WriteLine(i);
-                    foreach (char c in i.Trim())
-                    {
-                        if (c == ' ')
-                            count++;
+                    if (count == 0){
+                        name = i;
+                        count++;
+                    }
+                    else if (count == 1){
+                        eventName = i;
+                        count++;
+                    }
+                    else{
+                        while (double.TryParse(i, out double tempScore))
+                        {
+                            score += tempScore;
+                        }
+                        listEvent.Add(new EventScore(name, eventName, score));
+                        name = "";
+                        eventName = "";
+                        score = 0;
+                        count = 0;
                     }
                 }
-                Console.WriteLine($"The list has {count} words");
+                foreach( EventScore i in listEvent)
+                {
+                    Console.WriteLine(i);
+                }
             }
             else
-                Console.WriteLine("error");
-            StreamWriter writer = new StreamWriter("capitals.txt");
-            foreach (string i in words)
-                writer.WriteLine(i);
-            writer.Close();
+                Console.WriteLine("error, File not found");
         }
     }
 }
