@@ -6,6 +6,7 @@ namespace FileIO_assignment
     {
         static void Main(string[] args)
         {
+            /// Part 4
             List<EventScore> listEvent= new List<EventScore>();
             int count = 0;
             if (File.Exists(@"results.txt")){
